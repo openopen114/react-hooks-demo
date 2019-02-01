@@ -4,26 +4,27 @@ import axios from "axios";
 import { useDataApi } from "./dataService.js";
 
 export const SearchArea = () => {
-  const initialUrl = "http://hn.algolia.com/api/v1/search?query=redux";
-  const initialData = { hits: [] };
-  const [query, setQuery] = useState("redux");
+  const initialUrl = "https://api.icndb.com/jokes/random/3";
+  const initialData = { value: [] };
+  const [queryNumber, setQueryNumber] = useState(3);
   const { data, isLoading, isError, doGet } = useDataApi(
     initialUrl,
     initialData
   );
+
 
   return (
     <Fragment>
       {/* Search Form */}
       <form
         onSubmit={event =>
-          doGet(event, `http://hn.algolia.com/api/v1/search?query=${query}`)
+          doGet(event, `https://api.icndb.com/jokes/random/${queryNumber}`)
         }
       >
         <input
-          type="text"
-          value={query}
-          onChange={event => setQuery(event.target.value)}
+          type="number"
+          value={queryNumber}
+          onChange={event => setQueryNumber(event.target.value)}
         />
         <button type="submit">Search</button>
       </form>
@@ -35,13 +36,13 @@ export const SearchArea = () => {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <ul>
-          {data.hits.map(item => (
-            <li key={item.objectID}>
-              <a href={item.url}>{item.title}</a>
+        <ol>
+          {data.value.map(item => (
+            <li key={item.id} >
+              {item.joke}
             </li>
           ))}
-        </ul>
+        </ol>
       )}
     </Fragment>
   );

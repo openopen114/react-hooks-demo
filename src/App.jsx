@@ -8,6 +8,7 @@ class App extends Component {
     return (
       <div className="App"> 
         <h1>React Hooks</h1>
+        <p>API : https://www.icndb.com/api/</p>
         <SearchArea />
       </div>
     );
